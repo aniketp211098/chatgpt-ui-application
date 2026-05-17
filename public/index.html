@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Observability Console</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Custom EKS Observability + API Tester</p>
+          <h1>Trace failures from upstream request to downstream span.</h1>
+          <p class="subtitle">A working MVP with service discovery, trace waterfall, trace-correlated logs, and an integrated request runner.</p>
+        </div>
+        <button class="primary" id="refresh">↻ Refresh discovery</button>
+      </header>
+
+      <section class="grid metrics">
+        <article class="metric"><div>▣</div><span>Discovered services</span><strong id="service-count">0</strong></article>
+        <article class="metric"><div>⑂</div><span>Traces indexed</span><strong id="trace-count">0</strong></article>
+        <article class="metric danger-card"><div>⚠</div><span>Failed spans</span><strong id="failed-count">0</strong></article>
+        <article class="metric"><div>◷</div><span>Selected trace duration</span><strong id="duration">0ms</strong></article>
+      </section>
+
+      <section class="layout">
+        <aside class="panel trace-list">
+          <div class="panel-title">⌕ Recent traces</div>
+          <div id="trace-list"></div>
+        </aside>
+
+        <section class="panel waterfall">
+          <div class="panel-title">⑂ Waterfall trace view</div>
+          <div class="timeline-scale"><span>0ms</span><span id="duration-scale">0ms</span></div>
+          <div class="spans" id="spans"></div>
+          <div class="span-details" id="span-details"></div>
+        </section>
+      </section>
+
+      <section class="grid lower-grid">
+        <section class="panel">
+          <div class="panel-title">▤ Trace-correlated logs</div>
+          <input class="input" id="log-filter" placeholder="Filter logs by keyword, service, severity…" />
+          <div class="log-stream" id="logs"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-title">▶ Microservice API tester</div>
+          <div class="form-row">
+            <select id="service-select"></select>
+            <select id="method-select"><option>GET</option><option selected>POST</option><option>OPTIONS</option></select>
+            <input id="path-input" value="/checkout" />
+            <button class="primary" id="send">▶ Send</button>
+          </div>
+          <div class="editor-grid">
+            <div>
+              <h3>Request body</h3>
+              <textarea class="json-editor" id="request-body" spellcheck="false">{
+  "cartId": "cart-8842",
+  "customerId": "cust-42"
+}</textarea>
+            </div>
+            <div>
+              <h3>Response viewer</h3>
+              <textarea class="json-editor" id="response-body" spellcheck="false" readonly>{}</textarea>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="panel">
+        <div class="panel-title">▣ ALB target group discovery result</div>
+        <div class="service-table" id="services"></div>
+      </section>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
