@@ -1,0 +1,11 @@
+{
+  "name": "custom-observability-api-tester",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "build": "node server/check.js"
+  }
+}
